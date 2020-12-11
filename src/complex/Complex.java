@@ -7,6 +7,9 @@ package complex;
 
 import static java.lang.Math.PI;
 import static java.lang.Math.atan;
+import static java.lang.Math.cos;
+import static java.lang.Math.pow;
+import static java.lang.Math.sin;
 import static java.lang.Math.sqrt;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -116,7 +119,7 @@ public class Complex {
         complexPart+=b.complexPart;
     }
     
-    public boolean isEqual(Complex a,Complex b) throws Exception{
+    public static boolean isEqual(Complex a,Complex b) throws Exception{
         if (!a.isInitialized() || !b.isInitialized()){
             throw new Exception(NUMBER_NOT_INITIALIZED);
         }
@@ -214,4 +217,34 @@ public class Complex {
         return false;
     }
     
+    public void negate() throws Exception{
+        if (!isInitialized()){
+            throw new Exception(NUMBER_NOT_INITIALIZED);
+        }
+        complexPart=-complexPart;
+        realPart=-realPart;
+    }
+    
+    public void substract(Complex b) throws Exception{
+        if (!isInitialized() || !b.isInitialized()){
+            throw new Exception(NUMBER_NOT_INITIALIZED);
+        }
+        this.realPart-=b.getRealPart();
+        this.complexPart-=b.getComplexPart();
+    }
+    
+    public void toPower(double p) throws Exception{
+        if (!isInitialized()){
+            throw new Exception(NUMBER_NOT_INITIALIZED);
+        }
+        if (isReal())
+        {
+            this.realPart=pow(this.realPart,p);
+        }
+        double r=getR();
+        double theta=getTheta();
+        double exponent=pow(r,p);
+        this.realPart=exponent*cos(p*theta);
+        this.complexPart=exponent*sin(p*theta);
+    }
 }

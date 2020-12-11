@@ -14,15 +14,14 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
  * @author Binks
  */
-public class NewEmptyJUnitTest extends TestCase{
+public class HossuTests extends TestCase{
     
-    public NewEmptyJUnitTest() {
+    public HossuTests() {
     }
     
     @BeforeClass
@@ -42,13 +41,22 @@ public class NewEmptyJUnitTest extends TestCase{
     }
 
     @Test
-    public void testHello1(){
+    public void testInitialized(){
         Complex c=new Complex(1,2);
         assert(c.isInitialized());
     }
     
     @Test
-    public void testHello2(){
+    public void testNotInitialized(){
+        Complex a=new Complex();
+        assert(!a.isInitialized());
+        Complex b=new Complex(1,2);
+        b.forget();
+        assert(!b.isInitialized());
+    }
+    
+    @Test
+    public void testTwoComplexNumbers(){
         Complex c=new Complex();
         c.setRealPart(1);
         c.setComplexPart(2);
@@ -56,7 +64,7 @@ public class NewEmptyJUnitTest extends TestCase{
         try {
             assert(!c.isEqualTo(d));
         } catch (Exception ex) {
-            Logger.getLogger(NewEmptyJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HossuTests.class.getName()).log(Level.SEVERE, null, ex);
         }
         c.setTo(1,0);
     }
@@ -68,11 +76,37 @@ public class NewEmptyJUnitTest extends TestCase{
             c.addComplex(new Complex(0.0,2.6));
             assert(c.isReal());
         } catch (Exception ex) {
-            Logger.getLogger(NewEmptyJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HossuTests.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
     
+    @Test
+    public void testToFail(){
+        Complex a=new Complex(1,2);
+        Complex b=new Complex(0,2);
+        try{
+            a.substract(b);
+            assert(!a.isReal());
+        } catch (Exception ex) {
+            Logger.getLogger(HossuTests.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }
+    
+    @Test
+    public void testAPlusBiXAMinusBi(){
+        try {
+            Complex a=new Complex(2,3);
+            Complex b=new Complex(2,-3);
+            a.multiplyByComplex(b);
+            Complex c=new Complex(13,0);
+            assert(Complex.isEqual(a,c));
+        } catch (Exception ex) {
+            Logger.getLogger(HossuTests.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
