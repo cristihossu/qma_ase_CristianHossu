@@ -30,7 +30,7 @@ public class Complex {
     public Complex(double realPart, double complexPart){
         this.realPart=realPart;
         this.complexPart=complexPart;
-        initialized=false;
+        initialized=true;
     }
     
     
@@ -106,11 +106,11 @@ public class Complex {
     public String toString(){
         StringBuffer sb=new StringBuffer();
         try {
-            sb.append(String.format("%d",getRealPart()));
+            sb.append(String.format("%f",getRealPart()));
             if (getComplexPart()>=0.0){
                 sb.append("+");
             }
-            sb.append(String.format("%d",getComplexPart()));
+            sb.append(String.format("%f",getComplexPart()));
             if (getComplexPart()!=0.0){
                 sb.append("i");
             }
@@ -145,7 +145,19 @@ public class Complex {
     }
     
     public static void main(String[] args) {
-        // TODO code application logic here
+        Complex c=new Complex(2,3);
+        Complex d=c;
+        System.out.println(c.toString());
+        try {
+            c.inverse();
+            System.out.println(c.toString());
+            Complex e=c;
+            e.multiplyByComplex(c);
+            System.out.println(e.toString());
+        } catch (Exception ex) {
+            Logger.getLogger(Complex.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
     }
     
 }
