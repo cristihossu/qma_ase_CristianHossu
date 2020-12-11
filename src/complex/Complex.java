@@ -22,15 +22,38 @@ public class Complex {
     private final static String NUMBER_NOT_INITIALIZED="Number is not initialized";
     private final static String DIVISION_BY_ZERO="Division by zero";
     
+    public Complex(){
+        
+    }
+    
+    public void setRealPart(double realPart){
+        initialized=true;
+        this.realPart=realPart;
+    }
+    
+    
+    public void setComplexPart(double complexPart){
+        initialized=true;
+        this.complexPart=complexPart;
+    }
+    
+    public void setTo(double realPart,double complexPart){
+        initialized=true;
+        this.realPart=realPart;
+        this.complexPart=complexPart;
+    }
+    
+    public void forget(){
+        initialized=false;
+    }
+    
     public boolean isInitialized(){
         return initialized;
     }
     
     
     public Complex(double realPart, double complexPart){
-        this.realPart=realPart;
-        this.complexPart=complexPart;
-        initialized=true;
+        setTo(realPart,complexPart);
     }
     
     
@@ -103,6 +126,17 @@ public class Complex {
         return false;
     }
     
+    public boolean isEqualTo(Complex b) throws Exception{
+        if (!isInitialized() || !b.isInitialized()){
+            throw new Exception(NUMBER_NOT_INITIALIZED);
+        }
+        if (getRealPart()==b.getRealPart()  && getComplexPart()==b.getComplexPart()){
+            return true;
+        }
+        return false;
+            
+    }
+    
     public String toString(){
         StringBuffer sb=new StringBuffer();
         try {
@@ -158,6 +192,26 @@ public class Complex {
             Logger.getLogger(Complex.class.getName()).log(Level.SEVERE, null, ex);
         }
        
+    }
+    
+    public boolean isReal() throws Exception{
+        if (!isInitialized()){
+            throw new Exception(NUMBER_NOT_INITIALIZED);
+        }
+        if (complexPart==0.0){
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean isPureComplex() throws Exception{
+        if (!isInitialized()){
+            throw new Exception(NUMBER_NOT_INITIALIZED);
+        }
+        if (realPart==0.0 && complexPart!=0.0){
+            return true;
+        }
+        return false;
     }
     
 }
